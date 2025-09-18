@@ -5,7 +5,7 @@ const express = require('express');
 const app = express();
 
 //definisco il numero di porta su cui deve girare l'applicazione
-const port = 3000;
+const port = process.env.DB_PORT;
 
 //definisco la rotta base
 app.get("/", (req, res) =>{
@@ -21,4 +21,3 @@ app.listen(port, () =>{
 
 });
 
-const connection = require('./data/db')
