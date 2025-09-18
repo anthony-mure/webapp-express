@@ -32,6 +32,9 @@ const show = (req, res) =>{
 
     if(err) return res.status(500).json({ error: `Errore nell'esecuzione della query: ${err}`})
 
+    //controllo se non ho trovato il libro
+    if(resultMovie.length === 0 || resultMovie[0].id === null ) return res.status(404).json({ error: `Film non trovato`}); 
+
     res.send(resultMovie[0])  
 
   });
