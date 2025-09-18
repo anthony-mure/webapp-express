@@ -22,3 +22,6 @@ connection.connect((err) =>{
   }
 
 });
+
+//esportiamo la connessione
+module.exports = connection;
