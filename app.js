@@ -7,6 +7,8 @@ const app = express();
 //definisco il numero di porta su cui deve girare l'applicazione
 const port = process.env.DB_PORT;
 
+app.use(express.static('public'));
+
 //definisco la rotta base
 app.get("/", (req, res) =>{
 
