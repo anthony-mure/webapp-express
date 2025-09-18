@@ -7,6 +7,9 @@ const app = express();
 //definisco il numero di porta su cui deve girare l'applicazione
 const port = process.env.DB_PORT;
 
+//importiamo il router
+const moviesRouter = require("./routers/moviesRouter");
+
 app.use(express.static('public'));
 
 //definisco la rotta base
@@ -15,6 +18,9 @@ app.get("/", (req, res) =>{
   res.send("Rotta base dei miei film ")
 
 });
+
+//definisco le rotte per i film
+app.use("/movies", moviesRouter);
 
 //dico al server di rimanere in ascolto sulla porta 3000
 app.listen(port, () =>{
