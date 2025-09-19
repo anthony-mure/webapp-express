@@ -1,6 +1,9 @@
 //importo express
 const express = require('express');
 
+//import il pacchetto cors
+const cors = require('cors');
+
 //importo il middlewares errorsHandler
 const errorsHandler = require('./middlewares/errorsHandler');
 
@@ -33,6 +36,9 @@ app.use(errorsHandler);
 
 //uso il middlewares notFound
 app.use(notFound);
+
+//registro il middlewares per il cors
+app.use(cors({origin: process.env.FE_APP}));
 
 //dico al server di rimanere in ascolto sulla porta 3000
 app.listen(port, () =>{
