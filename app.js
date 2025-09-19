@@ -1,6 +1,12 @@
 //importo express
 const express = require('express');
 
+//importo il middlewares errorsHandler
+const errorsHandler = require('./middlewares/errorsHandler');
+
+//importo il middlewares notFound
+const notFound = require('./middlewares/notFound');
+
 //creo l'istanza dell'app attraverso il metodo express che ho importato
 const app = express();
 
@@ -21,6 +27,12 @@ app.get("/", (req, res) =>{
 
 //definisco le rotte per i film
 app.use("/movies", moviesRouter);
+
+//uso il middlewatres errorsHandler
+app.use(errorsHandler);
+
+//uso il middlewares notFound
+app.use(notFound);
 
 //dico al server di rimanere in ascolto sulla porta 3000
 app.listen(port, () =>{
