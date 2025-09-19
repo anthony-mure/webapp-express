@@ -1,7 +1,7 @@
 //importo express
 const express = require('express');
 
-//import il pacchetto cors
+//importo il pacchetto cors
 const cors = require('cors');
 
 //importo il middlewares errorsHandler
