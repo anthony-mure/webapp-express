@@ -34,18 +34,45 @@ const show = (req, res) =>{
   //recupero il paramentro id
   const { id } = req.params;
 
-  //creo la query
-  const sqlMovie = "SELECT * FROM movies WHERE id = ?";
+  //creo la query per il libro
+  const sqlMovie = `
+      SELECT movies. * ,ROUND(AVG(reviews.vote)) AS avarage_vote
+      FROM movies 
+      LEFT JOIN reviews ON reviews.movie_id = movies.id
+      WHERE movies.id = ?
+      GROUP BY movies.id
+    `;
+
+  //creo la query per le recensioni
+  const sqlReviews = "SELECT * FROM reviews WHERE movie_id = ?";
 
   //eseguo la query passando i paramentri
   connection.query(sqlMovie, [id], (err, resultMovie) =>{
 
     if(err) return res.status(500).json({ error: `Errore nell'esecuzione della query: ${err}`})
 
-    //controllo se non ho trovato il libro
+    //controllo se non ho trovato il film
     if(resultMovie.length === 0 || resultMovie[0].id === null ) return res.status(404).json({ error: `Film non trovato`}); 
 
-    res.send(resultMovie[0])  
+     const movie = resultMovie[0]
+     movie.image = req.imagePath + movie.image;
+     movie.avarage_vote = parseInt(movie.avarage_vote);
+
+     //eseguo la query delle recensioni
+     connection.query(sqlReviews, [id], (err, resultReviews) =>{
+
+      if(err) return res.status(500).json({error:`Errore nell'esecuzione della query:${err}`})
+
+        //creo un nuovo oggetto contente i dati di un film e l'array delle sue recensioni
+        const movieWithreviews = {
+
+          ...movie,
+          reviews: resultReviews
+
+        }
+
+        res.send(movieWithreviews);
+     })
 
   });
 
