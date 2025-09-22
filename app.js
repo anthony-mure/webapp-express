@@ -10,6 +10,9 @@ const errorsHandler = require('./middlewares/errorsHandler');
 //importo il middlewares notFound
 const notFound = require('./middlewares/notFound');
 
+//importo il middlewares setImagePath
+const imagePathMiddleware = require('./middlewares/imagePathMiddleware');
+
 //creo l'istanza dell'app attraverso il metodo express che ho importato
 const app = express();
 
@@ -21,12 +24,18 @@ const moviesRouter = require("./routers/moviesRouter");
 
 app.use(express.static('public'));
 
+//registro il middleware per le immagini
+app.use(imagePathMiddleware);
+
 //definisco la rotta base
 app.get("/", (req, res) =>{
 
   res.send("Rotta base dei miei film ")
 
 });
+
+//registro il middlewares per il cors
+app.use(cors({origin: process.env.FE_APP}));
 
 //definisco le rotte per i film
 app.use("/movies", moviesRouter);
@@ -36,9 +45,6 @@ app.use(errorsHandler);
 
 //uso il middlewares notFound
 app.use(notFound);
-
-//registro il middlewares per il cors
-app.use(cors({origin: process.env.FE_APP}));
 
 //dico al server di rimanere in ascolto sulla porta 3000
 app.listen(port, () =>{
