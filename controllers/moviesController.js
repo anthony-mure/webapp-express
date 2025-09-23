@@ -78,10 +78,35 @@ const show = (req, res) =>{
 
 };
 
+//rotta store per le reviews
+const storeReview = (req, res) => {
+
+  //recupero il paramentro id
+  const { id } = req.params;
+  const { name, vote, text } = req.body;
+
+  //creo la query per aggiungere una recensione
+  const sqlReview = `
+    INSERT INTO reviews (movie_id, name, vote, text)
+    VALUES (?, ?, ?, ?)
+  `;
+  
+  //eseguo la query per creare una recensione
+  connection.query(sqlReview, [id, name, vote, text], (err, result) => {
+    if (err) {
+      return res.status(500).json({ error: `Errore nel salvataggio: ${err}` });
+    }
+
+    res.status(201).json({ message: 'Recensione salvata con successo' });
+  
+  }); 
+};   
+
 //esportiamo l'oggetto
 module.exports = {
 
   index,
-  show
+  show,
+  storeReview
 
 };

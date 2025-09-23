@@ -15,5 +15,9 @@ router.get('/', moviesController.index);
 //rotta show
 router.get('/:id' , moviesController.show);
 
+//rotta store reviews
+router.post('/:id/reviews', moviesController.storeReview);
+
+
 //esportiamo il router
 module.exports = router;

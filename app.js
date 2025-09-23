@@ -24,6 +24,9 @@ const moviesRouter = require("./routers/moviesRouter");
 
 app.use(express.static('public'));
 
+app.use(express.json());
+
+
 //registro il middleware per le immagini
 app.use(imagePathMiddleware);
 
