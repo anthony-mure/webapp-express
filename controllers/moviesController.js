@@ -94,10 +94,10 @@ const storeReview = (req, res) => {
   //eseguo la query per creare una recensione
   connection.query(sqlReview, [id, name, vote, text], (err, result) => {
     if (err) {
-      return res.status(500).json({ error: `Errore nel salvataggio: ${err}` });
+      return res.status(500).json({ result: true, message: `Errore nel salvataggio: ${err}` });
     }
 
-    res.status(201).json({ message: 'Recensione salvata con successo' });
+    res.status(201).json({ result: false, message: 'Recensione salvata con successo' });
   
   }); 
 };   
